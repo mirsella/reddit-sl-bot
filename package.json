@@ -1,0 +1,10 @@
+{
+	"dependencies": {
+		"axios": "^0.24.0",
+		"dotenv": "^10.0.0",
+		"fs-extra": "^10.0.0",
+		"redaxios": "^0.4.1",
+		"reddit": "^1.2.1",
+		"rm": "^0.1.8"
+	}
+}
