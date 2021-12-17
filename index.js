@@ -1,5 +1,4 @@
-const Reddit = require('reddit')
-require('dotenv').config()
+const Reddit = require('reddit') require('dotenv').config()
 const axios = require('axios');
 const fs = require('fs-extra');
 
@@ -29,7 +28,7 @@ const reddit = new Reddit({
             thing_id: `t1_${comment.id}`
           })
             .then(e => {
-              console.log('done', e.json.data.things[0].data.permalink)
+              console.log('done', 'https://reddit.com' + e.json.data.things[0].data.permalink)
             })
             .catch(console.error)
         });
