@@ -1,4 +1,5 @@
-const Reddit = require('reddit') require('dotenv').config()
+const Reddit = require('reddit')
+require('dotenv').config()
 const axios = require('axios');
 const fs = require('fs-extra');
 
