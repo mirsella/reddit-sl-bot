@@ -19,10 +19,10 @@ const reddit = new Reddit({
   const last = config.last
   for (sr of config.sr) {
     api = `https://api.pushshift.io/reddit/comment/search/?subreddit=${sr}&q=sl&after=${last}` 
-    axios.get(api)
+    await axios.get(api)
       .then((res) => {
         const comments = res.data.data;
-        comments.forEach(comment => {
+        for (comment of comments) {
           reddit.post('/api/comment', {
             api_type: 'json',
             text: train,
@@ -33,7 +33,7 @@ const reddit = new Reddit({
               config.last = new Date().getTime().toString().slice(0, 10);
             })
             .catch(console.error)
-        });
+        }
       })
   }
   writeconfig();
