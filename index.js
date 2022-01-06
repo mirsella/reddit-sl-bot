@@ -15,7 +15,7 @@ const reddit = new Reddit({
   userAgent: 'MyApp/1.0.0 (http://example.com)'
 });
 
-const post = process.env.post || false;
+const post = config.post || false;
 (async () => {
   const last = config.last
   for (sr of config.sr) {
@@ -23,21 +23,20 @@ const post = process.env.post || false;
     await axios.get(api)
       .then((res) => {
         const comments = res.data.data;
-        if (post) {
-        for (comment of comments) {
-          reddit.post('/api/comment', {
-            api_type: 'json',
-            text: train,
-            thing_id: `t1_${comment.id}`
-          })
-            .then(e => {
-              console.log('done', 'https://reddit.com' + e.json.data.things[0].data.permalink)
-              config.last = new Date().getTime().toString().slice(0, 10);
+        if (post == true) {
+          for (comment of comments) {
+            reddit.post('/api/comment', {
+              api_type: 'json',
+              text: train,
+              thing_id: `t1_${comment.id}`
             })
-            .catch(console.error)
-        }
+              .then(e => {
+                console.log('done', 'https://reddit.com' + e.json.data.things[0].data.permalink)
+                config.last = new Date().getTime().toString().slice(0, 10);
+              })
+              .catch(console.error)
+          }
         } else {
-          console.log(comments)
         }
       })
   }
