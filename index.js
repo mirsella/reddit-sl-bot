@@ -15,13 +15,15 @@ const reddit = new Reddit({
   userAgent: 'MyApp/1.0.0 (http://example.com)'
 });
 
+const post = process.env.post || false;
 (async () => {
   const last = config.last
   for (sr of config.sr) {
-    api = `https://api.pushshift.io/reddit/comment/search/?subreddit=${sr}&q=sl&after=${last}` 
+    api = `https://api.pushshift.io/reddit/comment/search?subreddit=${sr}&q=sl&after=${last}` 
     await axios.get(api)
       .then((res) => {
         const comments = res.data.data;
+        if (post) {
         for (comment of comments) {
           reddit.post('/api/comment', {
             api_type: 'json',
@@ -33,6 +35,9 @@ const reddit = new Reddit({
               config.last = new Date().getTime().toString().slice(0, 10);
             })
             .catch(console.error)
+        }
+        } else {
+          console.log(comments)
         }
       })
   }
