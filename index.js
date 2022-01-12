@@ -33,17 +33,18 @@ const post = config.post || false;
               console.log('already done', comment.id)
               continue;
             }
-            reddit.post('/api/comment', {
+            requests.push(reddit.post('/api/comment', {
               api_type: 'json',
               text: train,
               thing_id: `t1_${comment.id}`
             })
               .then(e => {
-                console.log('done', 'https://reddit.com' + e.json.data.things[0].data.permalink)
+                console.log('done', comment.id, 'https://reddit.com' + e.json.data.things[0].data.permalink)
                 config.last = new Date().getTime().toString().slice(0, 10);
                 config.done.push(comment.id);
               })
               .catch(console.error)
+            )
           }
         } else {
           console.log(sr, comments)
