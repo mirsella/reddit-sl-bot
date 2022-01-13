@@ -18,14 +18,13 @@ const reddit = new Reddit({
   userAgent: 'MyApp/1.0.0 (http://example.com)'
 });
 
-let requests = []
 const post = config.post || false;
 (async () => {
   const last = config.last
   config.sr.forEach(async (sr) => {
     api = `https://api.pushshift.io/reddit/comment/search?subreddit=${sr}&q=sl&after=${last}`;
-    requests.push(axios.get(api)
-      .then(async (res) => {
+    axios.get(api)
+      .then((res) => {
         const comments = res.data.data;
         if (post == true) {
           for (comment of comments) {
@@ -33,7 +32,7 @@ const post = config.post || false;
               console.log('already done', comment.id)
               continue;
             }
-            await requests.push(reddit.post('/api/comment', {
+            reddit.post('/api/comment', {
               api_type: 'json',
               text: train,
               thing_id: `t1_${comment.id}`
@@ -45,15 +44,10 @@ const post = config.post || false;
                 writeconfig()
               })
               .catch(console.error)
-            )
           }
         } else {
           console.log(sr, comments)
         }
       })
-    )
-  })
-  Promise.all(requests).then((res) => {
-    console.log("all requests finished", res)
   })
 })()
