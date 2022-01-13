@@ -25,7 +25,7 @@ const post = config.post || false;
   config.sr.forEach(async (sr) => {
     api = `https://api.pushshift.io/reddit/comment/search?subreddit=${sr}&q=sl&after=${last}`;
     requests.push(axios.get(api)
-      .then((res) => {
+      .then(async (res) => {
         const comments = res.data.data;
         if (post == true) {
           for (comment of comments) {
@@ -33,7 +33,7 @@ const post = config.post || false;
               console.log('already done', comment.id)
               continue;
             }
-            requests.push(reddit.post('/api/comment', {
+            await requests.push(reddit.post('/api/comment', {
               api_type: 'json',
               text: train,
               thing_id: `t1_${comment.id}`
@@ -53,7 +53,7 @@ const post = config.post || false;
       })
     )
   })
-  Promise.all(requests).then(() => {
-    console.log("all requests finished")
+  Promise.all(requests).then((res) => {
+    console.log("all requests finished", res)
   })
 })()
