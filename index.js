@@ -42,6 +42,7 @@ const post = config.post || false;
                 console.log('done', comment.id, 'https://reddit.com' + e.json.data.things[0].data.permalink)
                 config.last = new Date().getTime().toString().slice(0, 10);
                 config.done.push(comment.id);
+                writeconfig()
               })
               .catch(console.error)
             )
@@ -53,6 +54,6 @@ const post = config.post || false;
     )
   })
   Promise.all(requests).then(() => {
-    writeconfig()
+    console.log("all requests finished")
   })
 })()
