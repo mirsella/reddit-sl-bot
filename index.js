@@ -33,7 +33,8 @@ const post = config.post || false;
               console.log('already done', comment.id)
               continue;
             }
-            if (config.blacklist.some(word => comment.body.includes.includes(word))) {
+            console.log(comment.body)
+            if (config.blacklist.some(word => (comment.body).includes(word))) {
               console.log('word blacklisted', comment.body, comment.id)
               continue;
             }
