@@ -38,7 +38,7 @@ const post = config.post || false;
               console.log('word blacklisted', comment.body, comment.id)
               continue;
             }
-            if ( ! (comment.body).test(/(^| )sl($| |.)/gmi) ) {
+            if ( ! (comment.body).test(/(^| )sl($| |\.)/gmi) ) {
               console.log('comment didn't match regex', comment.body)
               continue;
             }
