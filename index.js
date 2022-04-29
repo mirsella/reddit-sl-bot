@@ -39,7 +39,7 @@ const post = config.post || false;
               continue;
             }
             if ( ! (comment.body).test(/(^| )sl($| |\.)/gmi) ) {
-              console.log('comment didn't match regex', comment.body)
+              console.log("comment didn't match regex", comment.body)
               continue;
             }
             done.done.push(comment.id)
