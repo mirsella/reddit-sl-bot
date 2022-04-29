@@ -38,6 +38,10 @@ const post = config.post || false;
               console.log('word blacklisted', comment.body, comment.id)
               continue;
             }
+            if ( ! (comment.body).test(/(^| )sl($| |.)/gmi) ) {
+              console.log('comment didn't match regex', comment.body)
+              continue;
+            }
             done.done.push(comment.id)
             done.last = comment.created_utc
             reddit.post('/api/comment', {
